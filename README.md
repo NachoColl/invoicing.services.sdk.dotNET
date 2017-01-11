@@ -13,7 +13,7 @@ To start using the SDK just install the nuget package.
 
 ## How to use the .NET SDK
 
-To use the SDK you first need to register at [invoicing.services](https://invoicing.services/) and get your **API Key**.
+To start calling API methods you first need to register at [invoicing.services](https://invoicing.services/) and get your **API Key**.
 
 It's free.
 
