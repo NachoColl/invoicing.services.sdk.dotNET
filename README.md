@@ -4,6 +4,13 @@ Use this SDK to call [invoicing.services](https://invoicing.services/) API.
 
 You can check the API documentation at [docs.invoicing.services](http://docs.invoicing.services/).
 
+
+## Install
+
+To start using the SDK just install the nuget package.
+
+`PM > Install-Package invoicing.services.sdk.dotNET`
+
 ## How to use the .NET SDK
 
 To use the SDK you first need to register at [invoicing.services](https://invoicing.services/) and get your **API Key**.
