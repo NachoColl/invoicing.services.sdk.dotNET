@@ -1,5 +1,7 @@
 {
   "version": "1.0.0-*",
+  "authors": [ "Nacho Coll" ],
+  "description": "Free API to create and store your invoice PDF files.",
 
   "dependencies": {
     "NETStandard.Library": "1.6.0",
