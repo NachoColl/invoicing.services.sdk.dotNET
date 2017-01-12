@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v1.6": {},
     ".NETStandard,Version=v1.6/": {
-      "invoicing.services.sdk.dotNET/1.0.0": {
+      "invoicing.services.sdk.dotNET/1.0.2": {
         "dependencies": {
           "NETStandard.Library": "1.6.0",
           "Newtonsoft.Json": "9.0.1"
@@ -810,7 +810,7 @@
     }
   },
   "libraries": {
-    "invoicing.services.sdk.dotNET/1.0.0": {
+    "invoicing.services.sdk.dotNET/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -11,7 +11,7 @@ namespace invoicing.services.sdk.dotNET.Model
         [JsonProperty(PropertyName = "taxName", Required = Required.Always)]
         public string TaxName { get; set; } = "";
 
-        [JsonProperty(PropertyName = "taxRate", Required = Required.Always)]
+        [JsonProperty(PropertyName = "taxRate")]
         public decimal TaxRate { get; set; } = 0m;
 
         [JsonProperty(PropertyName = "taxTotal", Required = Required.Always)]

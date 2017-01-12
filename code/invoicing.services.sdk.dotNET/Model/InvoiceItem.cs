@@ -14,10 +14,10 @@ namespace invoicing.services.sdk.dotNET.Model
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; } = "";
 
-        [JsonProperty(PropertyName = "quantity", Required = Required.Always)]
-        public int Quantity { get; set; } = 0;
+        [JsonProperty(PropertyName = "quantity")]
+        public int Quantity { get; set; } = 1;
 
-        [JsonProperty(PropertyName = "unitPrice", Required = Required.Always)]
+        [JsonProperty(PropertyName = "unitPrice")]
         public decimal UnitPrice { get; set; } = 0;
 
         [JsonProperty(PropertyName = "taxes")]

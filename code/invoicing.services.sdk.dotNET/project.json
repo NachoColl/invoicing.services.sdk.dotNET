@@ -1,13 +1,21 @@
 {
-  "version": "1.0.0-*",
+  "version": "1.0.2-*",
   "authors": [ "Nacho Coll" ],
-  "description": "Free API to create and store your invoice PDF files.",
-
+  "description": "Free API to create and store your invoice PDF files. Get your API Key at invoicing.services (it's FREE).",
   "dependencies": {
     "NETStandard.Library": "1.6.0",
     "Newtonsoft.Json": "9.0.1"
   },
-
+  "packOptions": {
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/NachoColl/invoicing.services.sdk.dotNET"
+    },
+    "summary": "Free API to create and store your invoice PDF files.",
+    "projectUrl": "https://invoicing.services/",
+    "iconUrl": "https://invoicing.services/_images/favicon.png",
+    "tags": [ "invoice", "pdf", "invoicing", "invoiced", "freshbooks", "wave" ]
+  },
   "frameworks": {
     "netstandard1.6": {
       "imports": "dnxcore50"

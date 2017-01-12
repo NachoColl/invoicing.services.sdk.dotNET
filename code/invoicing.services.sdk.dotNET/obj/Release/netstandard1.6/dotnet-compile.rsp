@@ -8,9 +8,10 @@
 --suppress-warning:CS1705
 --optimize:True
 --output-name:invoicing.services.sdk.dotNET
---file-version:1.0.0.0
---version:1.0.0.0
---informational-version:1.0.0
+--description:Free API to create and store your invoice PDF files. Get your API Key at invoicing.services (it's FREE).
+--file-version:1.0.2.0
+--version:1.0.2.0
+--informational-version:1.0.2
 --target-framework:.NETStandard,Version=v1.6
 --reference:C:\Users\Nacho\.nuget\packages\Microsoft.CSharp\4.0.1\ref\netstandard1.0\Microsoft.CSharp.dll
 --reference:C:\Users\Nacho\.nuget\packages\Microsoft.Win32.Primitives\4.0.1\ref\netstandard1.3\Microsoft.Win32.Primitives.dll
