@@ -12,9 +12,9 @@ namespace invoicing.services.sdk.dotNET.Model
         public string TaxName { get; set; } = "";
 
         [JsonProperty(PropertyName = "taxRate")]
-        public decimal TaxRate { get; set; } = 0m;
+        public decimal TaxRate { get; set; } = decimal.Zero;
 
         [JsonProperty(PropertyName = "taxTotal", Required = Required.Always)]
-        public decimal TaxTotal { get; set; } = 0m;
+        public decimal TaxTotal { get; set; } = decimal.Zero;
     }
 }

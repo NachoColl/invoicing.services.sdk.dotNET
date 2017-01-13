@@ -39,7 +39,7 @@ namespace invoicing.services.sdk.dotNET.Model {
         public string ItemsListTaxes { get; set; } = "Taxes";
 
         [JsonProperty(PropertyName = "itemsListTotal")]
-        public string ItemsListTotal { get; set; } = "Total";
+        public string ItemsListTotal { get; set; } = "Amount";
 
         [JsonProperty(PropertyName = "subtotal")]
         public string Subtotal { get; set; } = "Subtotal";

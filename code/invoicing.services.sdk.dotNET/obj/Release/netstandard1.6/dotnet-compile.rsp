@@ -9,9 +9,9 @@
 --optimize:True
 --output-name:invoicing.services.sdk.dotNET
 --description:Free API to create and store your invoice PDF files. Get your API Key at invoicing.services (it's FREE).
---file-version:1.0.2.0
---version:1.0.2.0
---informational-version:1.0.2
+--file-version:1.0.4.0
+--version:1.0.4.0
+--informational-version:1.0.4
 --target-framework:.NETStandard,Version=v1.6
 --reference:C:\Users\Nacho\.nuget\packages\Microsoft.CSharp\4.0.1\ref\netstandard1.0\Microsoft.CSharp.dll
 --reference:C:\Users\Nacho\.nuget\packages\Microsoft.Win32.Primitives\4.0.1\ref\netstandard1.3\Microsoft.Win32.Primitives.dll
@@ -53,6 +53,7 @@
 --reference:C:\Users\Nacho\.nuget\packages\System.Security.Cryptography.Primitives\4.0.0\ref\netstandard1.3\System.Security.Cryptography.Primitives.dll
 --reference:C:\Users\Nacho\.nuget\packages\System.Security.Cryptography.X509Certificates\4.1.0\ref\netstandard1.4\System.Security.Cryptography.X509Certificates.dll
 --reference:C:\Users\Nacho\.nuget\packages\System.Text.Encoding\4.0.11\ref\netstandard1.3\System.Text.Encoding.dll
+--reference:C:\Users\Nacho\.nuget\packages\System.Text.Encoding.CodePages\4.0.1\ref\netstandard1.3\System.Text.Encoding.CodePages.dll
 --reference:C:\Users\Nacho\.nuget\packages\System.Text.Encoding.Extensions\4.0.11\ref\netstandard1.3\System.Text.Encoding.Extensions.dll
 --reference:C:\Users\Nacho\.nuget\packages\System.Text.RegularExpressions\4.1.0\ref\netstandard1.6\System.Text.RegularExpressions.dll
 --reference:C:\Users\Nacho\.nuget\packages\System.Threading\4.0.11\ref\netstandard1.3\System.Threading.dll
@@ -71,6 +72,10 @@ F:\Nacho\GitHubs\invoicing.services.sdk.dotNET\code\invoicing.services.sdk.dotNE
 F:\Nacho\GitHubs\invoicing.services.sdk.dotNET\code\invoicing.services.sdk.dotNET\Model\Labels.cs
 F:\Nacho\GitHubs\invoicing.services.sdk.dotNET\code\invoicing.services.sdk.dotNET\Model\Tax.cs
 F:\Nacho\GitHubs\invoicing.services.sdk.dotNET\code\invoicing.services.sdk.dotNET\Model\TextBlock.cs
+F:\Nacho\GitHubs\invoicing.services.sdk.dotNET\code\invoicing.services.sdk.dotNET\Model\APIQueries\GetInvoiceQuery.cs
+F:\Nacho\GitHubs\invoicing.services.sdk.dotNET\code\invoicing.services.sdk.dotNET\Model\APIQueries\ListInvoiceQuery.cs
 F:\Nacho\GitHubs\invoicing.services.sdk.dotNET\code\invoicing.services.sdk.dotNET\Model\APIResponses\AddInvoiceResponse.cs
+F:\Nacho\GitHubs\invoicing.services.sdk.dotNET\code\invoicing.services.sdk.dotNET\Model\APIResponses\ListInvoiceResponse.cs
+F:\Nacho\GitHubs\invoicing.services.sdk.dotNET\code\invoicing.services.sdk.dotNET\Model\APIResponses\ListInvoiceResponseItem.cs
 F:\Nacho\GitHubs\invoicing.services.sdk.dotNET\code\invoicing.services.sdk.dotNET\Properties\AssemblyInfo.cs
 F:\Nacho\GitHubs\invoicing.services.sdk.dotNET\code\invoicing.services.sdk.dotNET\Utils\Timestamp.cs

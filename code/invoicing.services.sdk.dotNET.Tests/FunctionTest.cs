@@ -1,9 +1,13 @@
-﻿using invoicing.services.sdk.dotNET.Model.APIResponses;
+﻿using invoicing.services.sdk.dotNET.Model;
+using invoicing.services.sdk.dotNET.Model.APIQueries;
+using invoicing.services.sdk.dotNET.Model.APIResponses;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace invoicing.services.sdk.dotNET.Tests
 {
@@ -165,5 +169,76 @@ namespace invoicing.services.sdk.dotNET.Tests
             Assert.Equal(now.ToString(), response.InvoiceDate);
         }
 
+
+        [Fact(DisplayName = @"Creates an Invoice from PAYPAL IPN Message.")]
+        public void Test5() {
+
+            InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+
+            string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_1.txt");
+            AddInvoiceResponse response = API.AddPaypalIPNMessageInvoice(ipnMessage);
+            Assert.Equal("1375-5556-7266-7753",response.InvoiceId);
+        }
+
+        [Fact(DisplayName = @"Creates an Invoice from PAYPAL IPN Message. Including custom param ""item_price1"".")]
+        public void Test6() {
+           
+                InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+               
+                string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_2.txt");
+                AddInvoiceResponse response = API.AddPaypalIPNMessageInvoice(ipnMessage);
+                Assert.Equal("0642-9185-2343-3538", response.InvoiceId);
+           
+        }
+
+        [Fact(DisplayName = @"List invoices for Year 2017.")]
+        public void Test7() {
+
+            InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+                     
+            ListInvoiceResponse response = API.ListInvoice(new Model.APIQueries.ListInvoiceQuery() { Year = 2017 });
+            Assert.True(response.Count > 0);
+
+        }
+
+        [Fact(DisplayName = @"List invoices for Year 2017, Quarter 1.")]
+        public void Test8() {
+
+            InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+
+            ListInvoiceResponse response = API.ListInvoice(new Model.APIQueries.ListInvoiceQuery() { Year = 2017, Quarter = 1 });
+            Assert.True(response.Count > 0);
+
+        }
+
+        [Fact(DisplayName = @"List invoices for Year 2017, Month 1.")]
+        public void Test9() {
+
+            InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+
+            ListInvoiceResponse response = API.ListInvoice(new Model.APIQueries.ListInvoiceQuery() { Year = 2017, Month = Months.January });
+            Assert.True(response.Count > 0);
+
+        }
+
+        [Fact(DisplayName = @"List invoices for Year 2017, Month 1, Day 1.")]
+        public void Test10() {
+
+            InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+
+            ListInvoiceResponse response = API.ListInvoice(new Model.APIQueries.ListInvoiceQuery() { Year = 2017, Month = Months.January, Day=1 });
+            Assert.True(response.Count == 1);
+
+        }
+
+        [Fact(DisplayName = @"Get invoice by GUID.")]
+        public void Test11() {
+
+            InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+
+            Invoice response = API.GetInvoice(new GetInvoiceQuery() { InvoiceGuid = "e234cd8f-4c66-4855-a5b4-23816fea6f23"});
+            Assert.Equal("1375-5556-7266-7753", response.Id);
+
+        }
     }
 }

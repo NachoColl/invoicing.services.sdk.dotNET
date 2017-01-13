@@ -18,16 +18,16 @@ namespace invoicing.services.sdk.dotNET.Model
         public int Quantity { get; set; } = 1;
 
         [JsonProperty(PropertyName = "unitPrice")]
-        public decimal UnitPrice { get; set; } = 0;
+        public decimal UnitPrice { get; set; } = decimal.Zero;
 
         [JsonProperty(PropertyName = "taxes")]
         public List<Tax> Taxes { get; set; }
 
         [JsonProperty(PropertyName = "itemSubTotalAmount")]
-        public decimal ItemSubTotalAmount { get; set; } = 0m;
+        public decimal ItemSubTotalAmount { get; set; } = decimal.Zero;
 
         [JsonProperty(PropertyName = "itemTotalAmount", Required = Required.Always)]
-        public decimal ItemTotalAmount { get; set; } = 0m; 
+        public decimal ItemTotalAmount { get; set; } = decimal.Zero; 
 
     }
 }

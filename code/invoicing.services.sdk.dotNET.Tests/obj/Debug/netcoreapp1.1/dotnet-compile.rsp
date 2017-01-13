@@ -89,6 +89,7 @@
 --reference:C:\Users\Nacho\.nuget\packages\System.Security.Cryptography.X509Certificates\4.3.0\ref\netstandard1.4\System.Security.Cryptography.X509Certificates.dll
 --reference:C:\Users\Nacho\.nuget\packages\System.Security.Principal\4.3.0\ref\netstandard1.0\System.Security.Principal.dll
 --reference:C:\Users\Nacho\.nuget\packages\System.Text.Encoding\4.3.0\ref\netstandard1.3\System.Text.Encoding.dll
+--reference:C:\Users\Nacho\.nuget\packages\System.Text.Encoding.CodePages\4.0.1\ref\netstandard1.3\System.Text.Encoding.CodePages.dll
 --reference:C:\Users\Nacho\.nuget\packages\System.Text.Encoding.Extensions\4.3.0\ref\netstandard1.3\System.Text.Encoding.Extensions.dll
 --reference:C:\Users\Nacho\.nuget\packages\System.Text.RegularExpressions\4.3.0\ref\netcoreapp1.1\System.Text.RegularExpressions.dll
 --reference:C:\Users\Nacho\.nuget\packages\System.Threading\4.3.0\ref\netstandard1.3\System.Threading.dll
