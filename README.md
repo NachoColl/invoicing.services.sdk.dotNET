@@ -88,7 +88,7 @@ Invoice response = API.GetInvoice(new GetInvoiceQuery() {
     });
 ```
 
-### Example 5: Extensive Invoice.
+### Example 5: Extensive invoice.
 
 This is an extensive invoice example.
 
