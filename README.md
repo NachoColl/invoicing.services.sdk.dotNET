@@ -66,9 +66,9 @@ Model.Actor response = API.UpdateSeller(new Model.Actor() {
 });
 ```
 
-### Example 3: Extense Invoice.
+### Example 3: Extensive Invoice.
 
-This is an example including all the invoice params you can set.
+This is an extensive invoice example.
 
 ```
 InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
@@ -145,4 +145,28 @@ AddInvoiceResponse response = API.AddInvoice(new Model.Invoice() {
         Color1 = "#766755"
     }
 });
+```
+### Example 4: List invoices.
+
+Get a list of invoices.
+
+```
+InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+ListInvoiceResponse response = 
+    API.ListInvoice(new Model.APIQueries.ListInvoiceQuery() { 
+        Year = 2017, 
+        Quarter = 1 
+    });
+```
+
+### Example 5: Get invoice details.
+
+Get invoice by GUID (returned on creation/list).
+
+```
+InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+Invoice response = 
+    API.GetInvoice(new GetInvoiceQuery() { 
+        InvoiceGuid = "e234cd8f-4c66-4855-a5b4-23816fea6f23"
+    });
 ```
