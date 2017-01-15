@@ -67,26 +67,6 @@ namespace invoicing.services.sdk.dotNET
             return addInvoiceResponse;
         }
 
-
-        /// <summary>
-        /// Use this method to create a new invoice from PayPal IPN message data.
-        /// </summary>
-        /// <param name="Invoice">Invoice data.</param>
-        /// <returns>AddInvoiceResponse class including Invoice id, date and PDF file URL.</returns>
-        public AddInvoiceResponse AddPaypalIPNMessageInvoice(string IPNMessage) {
-
-            Task<Task<string>> result = CallAPIAsyncText("paypal/invoice/add", IPNMessage);
-            string content = result.Result.Result;
-
-            AddInvoiceResponse addInvoiceResponse = JsonConvert.DeserializeObject<AddInvoiceResponse>(content, new JsonSerializerSettings() {
-                NullValueHandling = NullValueHandling.Ignore,
-                MissingMemberHandling = MissingMemberHandling.Ignore
-            });
-
-            return addInvoiceResponse;
-        }
-
-
         /// <summary>
         /// Use this method to get Invoice List.
         /// </summary>

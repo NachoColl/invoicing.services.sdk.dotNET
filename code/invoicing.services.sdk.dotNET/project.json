@@ -1,11 +1,16 @@
 {
-  "version": "1.0.4-*",
+  "version": "1.0.6-*",
   "authors": [ "Nacho Coll" ],
   "description": "Free API to create and store your invoice PDF files. Get your API Key at invoicing.services (it's FREE).",
   "dependencies": {
-    "NETStandard.Library": "1.6.0",
+    "NETStandard.Library": "1.6.1",
     "Newtonsoft.Json": "9.0.1",
-    "System.Text.Encoding.CodePages": "4.0.1"
+    "System.Text.Encoding.CodePages": "4.0.1",
+    "Microsoft.Extensions.FileProviders.Embedded": "1.0.0",
+    "Microsoft.Extensions.Primitives": "1.1.0",
+    "Microsoft.AspNetCore.WebUtilities": "1.1.0",
+    "System.Xml.XmlDocument": "4.3.0",
+    "System.Reflection.TypeExtensions": "4.3.0"
   },
   "packOptions": {
     "repository": {

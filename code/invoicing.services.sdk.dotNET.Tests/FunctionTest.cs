@@ -9,16 +9,14 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace invoicing.services.sdk.dotNET.Tests
-{
-    public class FunctionTest
-    {
+namespace invoicing.services.sdk.dotNET.Tests {
+    public class FunctionTest {
 
         // Set your API KEY here for doing the tests.
         const string MY_API_KEY = "";
 
         [Fact(DisplayName = "Creates a simple invoice.")]
-        public void Test1() {
+        public void Test_SDK_INVOICE_ADD_1() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
 
@@ -39,34 +37,34 @@ namespace invoicing.services.sdk.dotNET.Tests
                          Quantity = 2,
                          ItemTotalAmount = 40.02m
                      } },
-                Totals = new Model.InvoiceTotals() {  Total = 40.02m }
+                Totals = new Model.InvoiceTotals() { Total = 40.02m }
             });
             Assert.Equal(now.ToString(), response.InvoiceDate);
         }
 
-        [Fact(DisplayName = @"Sets your Seller ""Bill From"" data information.")]
-        public void Test2() {
+        [Fact(DisplayName = @"SDK: Sets your Seller ""Bill From"" data information.")]
+        public void Test_SDK_INVOICE_ADD_2() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
 
             Model.Actor response = API.UpdateSeller(new Model.Actor() {
-                    Id = "My Seller ID",
-                    Name = "ACME Corporation",
-                    Line1="This is my address line 1",
-                    TaxIds = new List<Model.ActorTaxId>() {
+                Id = "My Seller ID",
+                Name = "ACME Corporation",
+                Line1 = "This is my address line 1",
+                TaxIds = new List<Model.ActorTaxId>() {
                          new Model.ActorTaxId() {
                              Name = "VAT",
                              Value = "FE65774648"
                          }
                     }
-                });
+            });
 
             Assert.Equal("My Seller ID", response.Id);
         }
 
 
-        [Fact(DisplayName = @"Creates an invoice with your default Seller ""Bill From"" info.")]
-        public void Test3() {
+        [Fact(DisplayName = @"SDK: Creates an invoice with your default Seller ""Bill From"" info.")]
+        public void Test_SDK_INVOICE_ADD_3() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
 
@@ -89,23 +87,23 @@ namespace invoicing.services.sdk.dotNET.Tests
             Assert.Equal(now.ToString(), response.InvoiceDate);
         }
 
-        [Fact(DisplayName = @"Creates a more extensive Invoice.")]
-        public void Test4() {
+        [Fact(DisplayName = @"SDK: Creates a more extensive Invoice.")]
+        public void Test_SDK_INVOICE_ADD_4() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
 
             long now = Utils.Timestamp.CurrentTimeMillis();
             AddInvoiceResponse response = API.AddInvoice(new Model.Invoice() {
                 Dummy = true,
-                Id="0000123",
+                Id = "0000123",
                 Date = now,
                 CurrencyCode = "USD",
                 CountryCode = "US",
                 Seller = new Model.Actor() {
-                    Id="My Seller ID",
-                    Name="I am a Seller",
-                    Line1="This is my address.",
-                    TaxIds= new List<Model.ActorTaxId>() {
+                    Id = "My Seller ID",
+                    Name = "I am a Seller",
+                    Line1 = "This is my address.",
+                    TaxIds = new List<Model.ActorTaxId>() {
                         new Model.ActorTaxId() {
                             Name="FEV",
                             Value="774646/OL"
@@ -115,10 +113,10 @@ namespace invoicing.services.sdk.dotNET.Tests
                             Value="US7758847"
                         }
                     }
-                    
+
                 },
                 Buyer = new Model.Actor() {
-                    Id="INTERNAL 00212",
+                    Id = "INTERNAL 00212",
                     Name = "My First Invoice Buyer",
                     Line1 = "Company Address Line 1",
                     Line2 = "Address Line 2",
@@ -145,8 +143,8 @@ namespace invoicing.services.sdk.dotNET.Tests
                          ItemTotalAmount = 44.02m
                      } },
                 Totals = new Model.InvoiceTotals() {
-                     SubTotal = 40.02m,
-                     TaxTotals = new List<Model.InvoiceTaxTotal>() {
+                    SubTotal = 40.02m,
+                    TaxTotals = new List<Model.InvoiceTaxTotal>() {
                          new Model.InvoiceTaxTotal() {
                              TaxName="VAT",
                              TaxRate=10,
@@ -156,7 +154,7 @@ namespace invoicing.services.sdk.dotNET.Tests
                     Total = 44.02m
                 },
                 Notes = new Model.TextBlock() {
-                    Line1="This is a note to include some text/conditions."
+                    Line1 = "This is a note to include some text/conditions."
                 },
                 Labels = new Model.Labels() {
                     Title = "QUOTATION",
@@ -170,39 +168,54 @@ namespace invoicing.services.sdk.dotNET.Tests
         }
 
 
-        [Fact(DisplayName = @"Creates an Invoice from PAYPAL IPN Message.")]
-        public void Test5() {
+        [Fact(DisplayName = @"SDK:PAYPAL:INVOICE: Creates an Invoice from PAYPAL IPN Message.")]
+        public void Test_SDK_PAYPAL_INVOICE_ADD_1() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
 
             string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_1.txt");
-            AddInvoiceResponse response = API.AddPaypalIPNMessageInvoice(ipnMessage);
-            Assert.Equal("1375-5556-7266-7753",response.InvoiceId);
+
+            Invoice invoice = Parsers.PayPal.IPNParser.Parse(ipnMessage);
+            AddInvoiceResponse response = API.AddInvoice(invoice);
+            Assert.Equal("1375-5556-7266-7753", response.InvoiceId);
         }
 
-        [Fact(DisplayName = @"Creates an Invoice from PAYPAL IPN Message. Including custom param ""item_price1"".")]
-        public void Test6() {
-           
-                InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
-               
-                string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_2.txt");
-                AddInvoiceResponse response = API.AddPaypalIPNMessageInvoice(ipnMessage);
-                Assert.Equal("0642-9185-2343-3538", response.InvoiceId);
-           
-        }
-
-        [Fact(DisplayName = @"List invoices for Year 2017.")]
-        public void Test7() {
+        [Fact(DisplayName = @"SDK:PAYPAL:INVOICE: Creates an Invoice from PAYPAL IPN Message. Including custom param ""item_price1"".")]
+        public void Test_SDK_PAYPAL_INVOICE_ADD_2() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
-                     
+
+            string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_2.txt");
+            Invoice invoice = Parsers.PayPal.IPNParser.Parse(ipnMessage);
+            AddInvoiceResponse response = API.AddInvoice(invoice);
+            Assert.Equal("0642-9185-2343-3538", response.InvoiceId);
+
+        }
+
+        [Fact(DisplayName = @"SDK:PAYPAL:PARSE: Parses an Invoice from PAYPAL IPN Message.")]
+        public void Test_SDK_PAYPAL_PARSE_1() {
+
+            InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+
+            string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_3.txt");
+            Invoice invoice = Parsers.PayPal.IPNParser.Parse(ipnMessage);
+         
+            Assert.Equal(1484472178000, invoice.Date);
+
+        }
+
+        [Fact(DisplayName = @"SDK: List invoices for Year 2017.")]
+        public void Test_SDK_INVOICE_LIST_1() {
+
+            InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+
             ListInvoiceResponse response = API.ListInvoice(new Model.APIQueries.ListInvoiceQuery() { Year = 2017 });
             Assert.True(response.Count > 0);
 
         }
 
-        [Fact(DisplayName = @"List invoices for Year 2017, Quarter 1.")]
-        public void Test8() {
+        [Fact(DisplayName = @"SDK: List invoices for Year 2017, Quarter 1.")]
+        public void Test_SDK_INVOICE_LIST_2() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
 
@@ -211,8 +224,8 @@ namespace invoicing.services.sdk.dotNET.Tests
 
         }
 
-        [Fact(DisplayName = @"List invoices for Year 2017, Month 1.")]
-        public void Test9() {
+        [Fact(DisplayName = @"SDK: List invoices for Year 2017, Month 1.")]
+        public void Test_SDK_INVOICE_LIST_3() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
 
@@ -221,22 +234,22 @@ namespace invoicing.services.sdk.dotNET.Tests
 
         }
 
-        [Fact(DisplayName = @"List invoices for Year 2017, Month 1, Day 1.")]
-        public void Test10() {
+        [Fact(DisplayName = @"SDK: List invoices for Year 2017, Month 1, Day 1.")]
+        public void Test_SDK_INVOICE_LIST_4() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
 
-            ListInvoiceResponse response = API.ListInvoice(new Model.APIQueries.ListInvoiceQuery() { Year = 2017, Month = Months.January, Day=1 });
+            ListInvoiceResponse response = API.ListInvoice(new Model.APIQueries.ListInvoiceQuery() { Year = 2017, Month = Months.January, Day = 1 });
             Assert.True(response.Count == 1);
 
         }
 
-        [Fact(DisplayName = @"Get invoice by GUID.")]
-        public void Test11() {
+        [Fact(DisplayName = @"SDK: Get invoice by GUID.")]
+        public void Test_SDK_INVOICE_GET_1() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
 
-            Invoice response = API.GetInvoice(new GetInvoiceQuery() { InvoiceGuid = "e234cd8f-4c66-4855-a5b4-23816fea6f23"});
+            Invoice response = API.GetInvoice(new GetInvoiceQuery() { InvoiceGuid = "e234cd8f-4c66-4855-a5b4-23816fea6f23" });
             Assert.Equal("1375-5556-7266-7753", response.Id);
 
         }
