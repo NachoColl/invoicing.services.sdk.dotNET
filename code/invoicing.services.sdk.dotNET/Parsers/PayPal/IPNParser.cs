@@ -13,9 +13,12 @@ namespace invoicing.services.sdk.dotNET.Parsers.PayPal {
 
             IPNProperties IPNValues = new IPNProperties(Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(IPNMessage));
 
-            if (IPNValues.TRANSACTION.txn_type != IPNProperties.CONSTANTS.TransactionTypes.cart &&
-                IPNValues.TRANSACTION.txn_type != IPNProperties.CONSTANTS.TransactionTypes.express_checkout) {
-                throw new Exception("Only 'cart' IPN messages are allowed for now!");
+            if (!
+                (IPNValues.TRANSACTION.txn_type == IPNProperties.CONSTANTS.TransactionTypes.cart ||
+                IPNValues.TRANSACTION.txn_type == IPNProperties.CONSTANTS.TransactionTypes.express_checkout ||
+                IPNValues.PAYMENT.payment_status == IPNProperties.CONSTANTS.PaymentStatus.Refunded ||
+                IPNValues.PAYMENT.payment_status == IPNProperties.CONSTANTS.PaymentStatus.Reversed)) {
+                throw new Exception("Only 'cart/express_checkout' IPN messages are parsed for now!");
             }
 
             DateTime invoiceDate = DateTime.Now;
@@ -27,7 +30,7 @@ namespace invoicing.services.sdk.dotNET.Parsers.PayPal {
 
             Invoice invoice = new Invoice() {
                 Dummy = IPNValues.TRANSACTION.dummy,
-                Id = string.IsNullOrWhiteSpace(IPNValues.TRANSACTION.receipt_id) ? "" : IPNValues.TRANSACTION.receipt_id,
+                Id = IPNValues.TRANSACTION.txn_id,
                 Date = Utils.Timestamp.TimeToMillis(invoiceDate),
                 CurrencyCode = IPNValues.PAYMENT.mc_currency,
                 CountryCode = IPNValues.TRANSACTION.residence_country,
@@ -38,7 +41,7 @@ namespace invoicing.services.sdk.dotNET.Parsers.PayPal {
                     Line3 = IPNValues.TRANSACTION.residence_country
                 },
                 Notes = new TextBlock() {
-                    Line3 = string.Format("PayPal Transaction Id: {0}.", IPNValues.TRANSACTION.txn_id),
+                    Line3 = "PayPal status notes: " + IPNValues.PAYMENT.payment_status
                 }
             };
 
@@ -51,6 +54,17 @@ namespace invoicing.services.sdk.dotNET.Parsers.PayPal {
                     Quantity = IPNValues.PAYMENT.quantityx.ContainsKey(item.Key) ? IPNValues.PAYMENT.quantityx[item.Key] : 1,
                     ItemTotalAmount = IPNValues.PAYMENT.mc_gross_x[item.Key]
                 };
+
+                if (IPNValues.PAYMENT.taxx.ContainsKey(item.Key)) {
+                    if (invoiceItem.Taxes == null)
+                        invoiceItem.Taxes = new List<Tax>();
+                    Tax newTax = new Tax() {
+                        TaxName = "Tax",
+                        TaxTotal = IPNValues.PAYMENT.taxx[item.Key]
+                    };
+                    invoiceItem.Taxes.Add(newTax);
+                }
+
                 items.Add(invoiceItem);
             }
             invoice.Items = items;
@@ -63,9 +77,9 @@ namespace invoicing.services.sdk.dotNET.Parsers.PayPal {
 
             // taxes.
             if (IPNValues.PAYMENT.tax > decimal.Zero) {
-                totals.TaxTotals = new List<InvoiceTaxTotal>() {
-                            new InvoiceTaxTotal() {
-                                TaxName = "Tax",
+                totals.TaxTotals = new List<Tax>() {
+                            new Tax() {
+                                TaxName = "Total Tax",
                                 TaxRate = IPNValues.PAYMENT.tax_rate,
                                 TaxTotal = IPNValues.PAYMENT.tax
                             }

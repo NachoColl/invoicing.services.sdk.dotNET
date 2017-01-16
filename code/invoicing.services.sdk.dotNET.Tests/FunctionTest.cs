@@ -15,14 +15,14 @@ namespace invoicing.services.sdk.dotNET.Tests {
         // Set your API KEY here for doing the tests.
         const string MY_API_KEY = "";
 
-        [Fact(DisplayName = "Creates a simple invoice.")]
+        [Fact(DisplayName = "SDK: Creates a simple invoice.")]
         public void Test_SDK_INVOICE_ADD_1() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
 
             long now = Utils.Timestamp.CurrentTimeMillis();
             AddInvoiceResponse response = API.AddInvoice(new Model.Invoice() {
-                Dummy = true,
+                Dummy = false,
                 Date = now,
                 Seller = new Model.Actor() {
                     Name = "ACME Corporation",
@@ -35,9 +35,15 @@ namespace invoicing.services.sdk.dotNET.Tests {
                          Name = "My Product Name",
                          UnitPrice = 20.01m,
                          Quantity = 2,
-                         ItemTotalAmount = 40.02m
+                         Taxes = new List<Tax>() {
+                             new Tax() {
+                                 TaxName = "VAT",
+                                 TaxTotal = 1.02m
+                             }
+                         },
+                         ItemTotalAmount = 41.04m
                      } },
-                Totals = new Model.InvoiceTotals() { Total = 40.02m }
+                Totals = new Model.InvoiceTotals() { Total = 41.04m }
             });
             Assert.Equal(now.ToString(), response.InvoiceDate);
         }
@@ -144,8 +150,8 @@ namespace invoicing.services.sdk.dotNET.Tests {
                      } },
                 Totals = new Model.InvoiceTotals() {
                     SubTotal = 40.02m,
-                    TaxTotals = new List<Model.InvoiceTaxTotal>() {
-                         new Model.InvoiceTaxTotal() {
+                    TaxTotals = new List<Model.Tax>() {
+                         new Model.Tax() {
                              TaxName="VAT",
                              TaxRate=10,
                              TaxTotal=4.00m

@@ -12,7 +12,7 @@ namespace invoicing.services.sdk.dotNET.Model
         public decimal SubTotal { get; set; } = decimal.Zero;
 
         [JsonProperty(PropertyName = "taxTotals")]
-        public List<InvoiceTaxTotal> TaxTotals;
+        public List<Tax> TaxTotals;
 
         [JsonProperty(PropertyName = "total", Required = Required.Always)]
         public decimal Total { get; set; } = decimal.Zero;

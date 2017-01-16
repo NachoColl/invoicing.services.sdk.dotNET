@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -8,11 +9,15 @@ using System.Threading.Tasks;
 
 namespace invoicing.services.sdk.dotNET {
 
+    /// <summary>
+    /// PayPal IPN properties as described on https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNandPDTVariables
+    /// </summary>
     public class IPNProperties {
 
-       // https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNandPDTVariables
 
-       public static class CONSTANTS {
+        static CultureInfo _decimalsCulture = new CultureInfo("en-US");
+
+        public static class CONSTANTS {
 
             public static class TransactionTypes {
 
@@ -58,7 +63,7 @@ namespace invoicing.services.sdk.dotNET {
                 public const string Voided = "Voided";
             }
         }
-     
+
         public IPNProperties_TRANSACTION TRANSACTION = new IPNProperties_TRANSACTION();
         public class IPNProperties_TRANSACTION : IPNProperties_X {
 
@@ -88,13 +93,13 @@ namespace invoicing.services.sdk.dotNET {
             public string custom { get; private set; } = string.Empty;
             public string ipn_track_id { get; private set; } = string.Empty;
             public string notify_version { get; private set; } = string.Empty;
-            public string parent_txn_id { get; private set; } = string.Empty;          
+            public string parent_txn_id { get; private set; } = string.Empty;
             public string receiver_email { get; private set; } = string.Empty;
             public string receiver_id { get; private set; } = string.Empty;
-            public string resend { get; private set; } = string.Empty;          
-            public string test_ipn { get; private set; } = string.Empty;           
+            public string resend { get; private set; } = string.Empty;
+            public string test_ipn { get; private set; } = string.Empty;
             public string verify_sign { get; private set; } = string.Empty;
-      
+
         }
 
         public IPNProperties_PAYREQUEST PAYREQUEST = new IPNProperties_PAYREQUEST();
@@ -116,9 +121,9 @@ namespace invoicing.services.sdk.dotNET {
             public string reason_code { get; private set; } = string.Empty;
         }
 
-        public IPNProperties_PAYER PAYER = new IPNProperties_PAYER();    
+        public IPNProperties_PAYER PAYER = new IPNProperties_PAYER();
         public class IPNProperties_PAYER : IPNProperties_X {
-           public string address_country { get; private set; } = string.Empty;
+            public string address_country { get; private set; } = string.Empty;
             public string address_city { get; private set; } = string.Empty;
             public string address_country_code { get; private set; } = string.Empty;
             public string address_name { get; private set; } = string.Empty;
@@ -173,7 +178,7 @@ namespace invoicing.services.sdk.dotNET {
             /// <summary>
             /// Full amount of the customer's payment, before transaction fee is subtracted.
             /// </summary>
-            public decimal mc_gross { get; private set; } = 0m;        
+            public decimal mc_gross { get; private set; } = 0m;
             /// <summary>
             /// Transaction fee associated with the payment. mc_gross minus mc_fee equals the amount deposited into the receiver_email account.
             /// </summary>
@@ -191,7 +196,14 @@ namespace invoicing.services.sdk.dotNET {
             /// <summary>
             /// Quantity as entered by your customer or as passed by you, the merchant.
             /// </summary>
-            public SortedDictionary<int,int> quantityx = new SortedDictionary<int, int>();
+            public SortedDictionary<int, int> quantityx = new SortedDictionary<int, int>();
+
+
+            /// <summary>
+            /// The taxx variable is included only if there was a specific tax amount applied to a particular shopping cart item.
+            /// </summary>
+            public SortedDictionary<int, decimal> taxx = new SortedDictionary<int, decimal>();
+
             /// <summary>
             /// The amount is in the currency of mc_currency, where x is the shopping cart detail item number. The sum of mc_gross_x should total mc_gross.
             /// </summary>
@@ -209,28 +221,30 @@ namespace invoicing.services.sdk.dotNET {
             public string mc_shipping { get; private set; } = string.Empty;
             public string memo { get; private set; } = string.Empty;
             public string payer_status { get; private set; } = string.Empty;
-           
-            public string pending_reason { get; private set; } = string.Empty;        
+
+            public string pending_reason { get; private set; } = string.Empty;
             public string protection_eligibility { get; private set; } = string.Empty;
-            
+
             public string reason_code { get; private set; } = string.Empty;
             public string remaining_settle { get; private set; } = string.Empty;
             public string settle_amount { get; private set; } = string.Empty;
             public string settle_currency { get; private set; } = string.Empty;
             public string shipping { get; private set; } = string.Empty;
             public string shipping_method { get; private set; } = string.Empty;
-           
+
             public string transaction_entity { get; private set; } = string.Empty;
 
             public void InitializeItems(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> Dictionary) {
 
+
+
                 /// mc_gross_1,mc_gross_2,.. values
                 foreach (var mc_gross_x in Dictionary.Where(k => k.Key.StartsWith("mc_gross_"))) {
-                    this.mc_gross_x.Add(int.Parse(mc_gross_x.Key.Split('_')[2]), decimal.Parse(mc_gross_x.Value, new System.Globalization.CultureInfo("US")));
+                    this.mc_gross_x.Add(int.Parse(mc_gross_x.Key.Split('_')[2]), decimal.Parse(mc_gross_x.Value, _decimalsCulture));
                 }
                 /// quantity1, quantity2,.. values.
-                foreach (var quantityx in Dictionary.Where(k => k.Key.StartsWith("quantity") && k.Key.Length>8)) {
-                    this.quantityx.Add(int.Parse(quantityx.Key.Replace("quantity","")), int.Parse(quantityx.Value));
+                foreach (var quantityx in Dictionary.Where(k => k.Key.StartsWith("quantity") && k.Key.Length > 8)) {
+                    this.quantityx.Add(int.Parse(quantityx.Key.Replace("quantity", "")), int.Parse(quantityx.Value));
                 }
                 /// item_name1, item_name2,.. values.
                 foreach (var item_namex in Dictionary.Where(k => k.Key.StartsWith("item_name") && k.Key.Length > 9)) {
@@ -238,9 +252,13 @@ namespace invoicing.services.sdk.dotNET {
                 }
                 /// item_price1, item_price2,.. values.
                 foreach (var item_pricex in Dictionary.Where(k => k.Key.StartsWith("item_price") && k.Key.Length > 10)) {
-                    this.item_pricex.Add(int.Parse(item_pricex.Key.Replace("item_price", "")), decimal.Parse(item_pricex.Value, new System.Globalization.CultureInfo("US")));
+                    this.item_pricex.Add(int.Parse(item_pricex.Key.Replace("item_price", "")), decimal.Parse(item_pricex.Value, _decimalsCulture));
                 }
-               
+                /// tax1,tax2,.. values.
+                foreach (var taxx in Dictionary.Where(k => k.Key.StartsWith("tax") && k.Key.Length > 3)) {
+                    this.taxx.Add(int.Parse(taxx.Key.Replace("tax", "")), decimal.Parse(taxx.Value, _decimalsCulture));
+                }
+
 
             }
         }
@@ -250,13 +268,13 @@ namespace invoicing.services.sdk.dotNET {
 
             public string initial_payment_amount { get; private set; } = string.Empty;
             public string initial_payment_status { get; private set; } = string.Empty;
-            public string initial_payment_txn_id { get; private set; } = string.Empty; 
+            public string initial_payment_txn_id { get; private set; } = string.Empty;
             public string currency_code { get; private set; } = "USD";
             public string residence_country { get; private set; } = string.Empty;
 
             public string amount { get; private set; } = string.Empty;
             public string amount_per_cycle { get; private set; } = string.Empty;
-                    
+
             public string next_payment_date { get; private set; } = "monthly";
             public string outstanding_balance { get; private set; } = string.Empty;
             public string payment_cycle { get; private set; } = string.Empty;
@@ -270,7 +288,7 @@ namespace invoicing.services.sdk.dotNET {
 
         }
 
-        public IPNProperties_DISPUTE DISPUTE = new IPNProperties_DISPUTE(); 
+        public IPNProperties_DISPUTE DISPUTE = new IPNProperties_DISPUTE();
         public class IPNProperties_DISPUTE : IPNProperties_X {
 
             public string buyer_additional_information { get; private set; } = string.Empty;
@@ -298,10 +316,11 @@ namespace invoicing.services.sdk.dotNET {
                     if (Dictionary.ContainsKey(classProperty.Name)) {
                         if (classProperty.PropertyType == typeof(decimal)) {
                             classProperty.SetValue(this, decimal.Parse(Dictionary[classProperty.Name].FirstOrDefault(), new System.Globalization.CultureInfo("US")));
-                        }else
+                        }
+                        else
                             classProperty.SetValue(this, Convert.ChangeType(Dictionary[classProperty.Name].FirstOrDefault(), classProperty.PropertyType));
                     }
-                 }
+                }
             }
         }
 
@@ -309,12 +328,12 @@ namespace invoicing.services.sdk.dotNET {
             StringBuilder output = new StringBuilder();
             foreach (var classProperty in PAYER.GetType()
                                .GetProperties()) {
-                output.AppendFormat("[{0},{1}]",  classProperty.Name, classProperty.GetValue(PAYER));
+                output.AppendFormat("[{0},{1}]", classProperty.Name, classProperty.GetValue(PAYER));
             }
             return output.ToString();
         }
 
-        
+
 
 
     }
