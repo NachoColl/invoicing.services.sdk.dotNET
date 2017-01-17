@@ -173,6 +173,59 @@ namespace invoicing.services.sdk.dotNET.Tests {
             Assert.Equal(now.ToString(), response.InvoiceDate);
         }
 
+      
+        [Fact(DisplayName = @"SDK:PAYPAL:PARSE: Parses an Invoice from PAYPAL IPN Message.")]
+        public void Test_SDK_PAYPAL_PARSE_1() {
+
+            string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_3.txt");
+            Invoice invoice = Parsers.PayPal.IPNParser.Parse(ipnMessage);
+
+            Assert.Equal(1484472178000, invoice.Date);
+
+        }
+
+        [Fact(DisplayName = @"SDK:PAYPAL:PARSE: Parses a REFUND Invoice from PAYPAL IPN Message.")]
+        public void Test_SDK_PAYPAL_PARSE_2() {
+
+       
+            string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_4.txt");
+            Invoice invoice = Parsers.PayPal.IPNParser.Parse(ipnMessage);
+
+            Assert.Equal(-3.99m, invoice.Totals.TaxTotals[0].TaxTotal);
+
+        }
+
+        [Fact(DisplayName = @"SDK:PAYPAL:PARSE: Parses a Invoice from PAYPAL IPN Message WITHOUT Taxes.")]
+        public void Test_SDK_PAYPAL_PARSE_4() {
+
+
+            string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_5.txt");
+            Invoice invoice = Parsers.PayPal.IPNParser.Parse(ipnMessage);
+
+            Assert.Equal(null, invoice.Totals.TaxTotals);
+            Assert.Equal(null, invoice.Items[0].Taxes);
+
+        }
+
+        [Fact(DisplayName = @"SDK:PAYPAL:PARSE: Parses a Recurring Payment CREATION WITH INITIAL PAYMENT.")]
+        public void Test_SDK_PAYPAL_PARSE_5() {
+
+            string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_6.txt");
+            Invoice invoice = Parsers.PayPal.IPNParser.Parse(ipnMessage);
+
+            Assert.Equal(29.00m, invoice.Totals.Total);
+  
+        }
+
+        [Fact(DisplayName = @"SDK:PAYPAL:PARSE: Parses a Recurring REGULAR Payment.")]
+        public void Test_SDK_PAYPAL_PARSE_6() {
+
+            string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_7.txt");
+            Invoice invoice = Parsers.PayPal.IPNParser.Parse(ipnMessage);
+
+            Assert.Equal(29.00m, invoice.Totals.Total);
+
+        }
 
         [Fact(DisplayName = @"SDK:PAYPAL:INVOICE: Creates an Invoice from PAYPAL IPN Message.")]
         public void Test_SDK_PAYPAL_INVOICE_ADD_1() {
@@ -198,16 +251,16 @@ namespace invoicing.services.sdk.dotNET.Tests {
 
         }
 
-        [Fact(DisplayName = @"SDK:PAYPAL:PARSE: Parses an Invoice from PAYPAL IPN Message.")]
-        public void Test_SDK_PAYPAL_PARSE_1() {
+        [Fact(DisplayName = @"SDK:PAYPAL:INVOICE: Creates an Invoice from PAYPAL IPN Message. WITHOUT TAXES.")]
+        public void Test_SDK_PAYPAL_INVOICE_ADD_3() {
 
             InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
 
-            string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_3.txt");
-            Invoice invoice = Parsers.PayPal.IPNParser.Parse(ipnMessage);
-         
-            Assert.Equal(1484472178000, invoice.Date);
+            string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_5.txt");
 
+            Invoice invoice = Parsers.PayPal.IPNParser.Parse(ipnMessage);
+            AddInvoiceResponse response = API.AddInvoice(invoice);
+            Assert.Equal("4R478441Y3261273T", response.InvoiceId);
         }
 
         [Fact(DisplayName = @"SDK: List invoices for Year 2017.")]

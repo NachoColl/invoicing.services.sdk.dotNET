@@ -266,25 +266,63 @@ namespace invoicing.services.sdk.dotNET {
         public IPNProperties_RECURRING RECURRING = new IPNProperties_RECURRING();
         public class IPNProperties_RECURRING : IPNProperties_X {
 
-            public string initial_payment_amount { get; private set; } = string.Empty;
+            /// <summary>
+            /// When a recurring payment was created
+            /// </summary>
+            public string time_created { get; private set; } = string.Empty;
+            /// <summary>
+            /// Product name associated with a recurring payment
+            /// </summary>
+            public string product_name { get; private set; } = string.Empty;
+            /// <summary>
+            /// Initial payment amount for recurring payments
+            /// </summary>
+            public decimal initial_payment_amount { get; private set; } = decimal.Zero;
+
             public string initial_payment_status { get; private set; } = string.Empty;
             public string initial_payment_txn_id { get; private set; } = string.Empty;
             public string currency_code { get; private set; } = "USD";
             public string residence_country { get; private set; } = string.Empty;
 
-            public string amount { get; private set; } = string.Empty;
-            public string amount_per_cycle { get; private set; } = string.Empty;
-
-            public string next_payment_date { get; private set; } = "monthly";
-            public string outstanding_balance { get; private set; } = string.Empty;
+            /// <summary>
+            /// Amount of recurring payment
+            /// </summary>
+            public decimal amount { get; private set; } = decimal.Zero;
+            /// <summary>
+            /// Amount of recurring payment per cycle
+            /// </summary>
+            public decimal amount_per_cycle { get; private set; } = decimal.Zero;
+            /// <summary>
+            /// Next payment date for a recurring payment
+            /// </summary>
+            public string next_payment_date { get; private set; } = "";
+            /// <summary>
+            /// Outstanding balance for recurring payments
+            /// </summary>
+            public decimal outstanding_balance { get; private set; } = decimal.Zero;
+            /// <summary>
+            /// Payment cycle for recurring payments
+            /// </summary>
             public string payment_cycle { get; private set; } = string.Empty;
+            /// <summary>
+            /// Kind of period for a recurring payment
+            /// </summary>
             public string period_type { get; private set; } = string.Empty;
-            public string product_name { get; private set; } = string.Empty;
+           
             public string product_type { get; private set; } = string.Empty;
+            /// <summary>
+            /// Profile status for a recurring payment
+            /// </summary>
             public string profile_status { get; private set; } = string.Empty;
+            /// <summary>
+            /// Recurring payment ID
+            /// </summary>
             public string recurring_payment_id { get; private set; } = string.Empty;
+            /// <summary>
+            /// The merchant's own unique reference or invoice number, which can be used to uniquely identify a profile. 
+            /// </summary>
             public string rp_invoice_id { get; private set; } = string.Empty;
-            public string time_created { get; private set; } = string.Empty;
+          
 
         }
 

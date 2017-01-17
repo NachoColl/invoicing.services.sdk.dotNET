@@ -11,7 +11,7 @@
           "dotnet-test-xunit": "2.2.0-preview2-build1029",
           "xunit": "2.2.0-beta2-build3300",
           "Microsoft.DotNet.InternalAbstractions": "1.0.500-preview2-1-003177",
-          "invoicing.services.sdk.dotNET": "1.0.6"
+          "invoicing.services.sdk.dotNET": "1.1.2"
         },
         "runtime": {
           "invoicing.services.sdk.dotNET.Tests.dll": {}
@@ -250,7 +250,7 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "invoicing.services.sdk.dotNET/1.0.6": {
+      "invoicing.services.sdk.dotNET/1.1.2": {
         "dependencies": {
           "Newtonsoft.Json": "9.0.1",
           "Microsoft.Extensions.FileProviders.Embedded": "1.0.0",
@@ -430,7 +430,7 @@
       "serviceable": true,
       "sha512": "sha512-lotqjLPg8NnjZHlRpj0Yj5TI3z/7hzK7+tb6R7qRAREDoH9P88EDCWJyy2xJh/R6PfbS9KYTaT/Z2ob9gx6PgQ=="
     },
-    "invoicing.services.sdk.dotNET/1.0.6": {
+    "invoicing.services.sdk.dotNET/1.1.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
