@@ -37,10 +37,9 @@ namespace invoicing.services.sdk.dotNET
         /// <returns>Returns the same Seller information</returns>
         public Actor UpdateSeller(Actor Seller) {
 
-            Task<Task<string>> result = CallAPIAsync("seller/update", Seller);
-            string content = result.Result.Result;
-
-            Actor updateSellerResponse = JsonConvert.DeserializeObject<Actor>(content, new JsonSerializerSettings() {
+            string result = CallAPI("seller/update", Seller);
+         
+            Actor updateSellerResponse = JsonConvert.DeserializeObject<Actor>(result, new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore,
                 MissingMemberHandling = MissingMemberHandling.Ignore
             });
@@ -56,10 +55,9 @@ namespace invoicing.services.sdk.dotNET
         /// <returns>AddInvoiceResponse class including Invoice id, date and PDF file URL.</returns>
         public AddInvoiceResponse AddInvoice(Invoice Invoice) {
 
-            Task<Task<string>> result = CallAPIAsync("invoice/add", Invoice);
-            string content = result.Result.Result;
-
-            AddInvoiceResponse addInvoiceResponse = JsonConvert.DeserializeObject<AddInvoiceResponse>(content, new JsonSerializerSettings() {
+            string result = CallAPI("invoice/add", Invoice);
+           
+            AddInvoiceResponse addInvoiceResponse = JsonConvert.DeserializeObject<AddInvoiceResponse>(result, new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore,
                 MissingMemberHandling = MissingMemberHandling.Ignore
             });
@@ -74,10 +72,9 @@ namespace invoicing.services.sdk.dotNET
         /// <returns>ListInvoiceResponse object.</returns>
         public ListInvoiceResponse ListInvoice(ListInvoiceQuery Query) {
 
-            Task<Task<string>> result = CallAPIAsync("invoice/list", Query);
-            string content = result.Result.Result;
-
-            ListInvoiceResponse listInvoiceResponse = JsonConvert.DeserializeObject<ListInvoiceResponse>(content, new JsonSerializerSettings() {
+            string result = CallAPI("invoice/list", Query);
+         
+            ListInvoiceResponse listInvoiceResponse = JsonConvert.DeserializeObject<ListInvoiceResponse>(result, new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore,
                 MissingMemberHandling = MissingMemberHandling.Ignore
             });
@@ -92,10 +89,9 @@ namespace invoicing.services.sdk.dotNET
         /// <returns>Invoice object</returns>
         public Invoice GetInvoice(GetInvoiceQuery Query) {
 
-            Task<Task<string>> result = CallAPIAsync("invoice/get", Query);
-            string content = result.Result.Result;
-
-            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(content, new JsonSerializerSettings() {
+            string result = CallAPI("invoice/get", Query);
+          
+            Invoice invoice = JsonConvert.DeserializeObject<Invoice>(result, new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore,
                 MissingMemberHandling = MissingMemberHandling.Ignore
             });
@@ -103,33 +99,42 @@ namespace invoicing.services.sdk.dotNET
             return invoice;
         }
 
-
-
         #region privates
 
-        static async Task<Task<string>> CallAPIAsync(string Method, Object Object) {
+        static string CallAPI(string Method, Object Object) {
 
             string jsonString = JsonConvert.SerializeObject(Object, new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore,
                 MissingMemberHandling = MissingMemberHandling.Ignore
             });
 
-            HttpResponseMessage response = await _client.PostAsync(Method, 
-                new StringContent(jsonString, Encoding.UTF8, "application/json"));
-            response.EnsureSuccessStatusCode();
+            var result =  _client.PostAsync(Method, 
+                new StringContent(jsonString, Encoding.UTF8, "application/json")).Result;
+            var response = result.Content.ReadAsStringAsync().Result;
 
-            return response.Content.ReadAsStringAsync();
+            if (!result.IsSuccessStatusCode) {
+                var responseMessage = "Response status code does not indicate success: " + (int)result.StatusCode + ". ";
+                throw new HttpRequestException(responseMessage + Environment.NewLine + response);
+            }
+
+            return response;
         }
 
-        static async Task<Task<string>> CallAPIAsyncText(string Method, string BodyText) {
+        static string CallAPI(string Method, string BodyText) {
 
             Encoding wind1252 = Encoding.GetEncoding("windows-1252");
 
-            HttpResponseMessage response = await _client.PostAsync(Method,
-                new StringContent(BodyText, wind1252, "text/plain"));
-            response.EnsureSuccessStatusCode();
+            var result = _client.PostAsync(Method,
+                new StringContent(BodyText, wind1252, "text/plain")).Result;
+            var response = result.Content.ReadAsStringAsync().Result;
 
-            return response.Content.ReadAsStringAsync();
+            if (!result.IsSuccessStatusCode) {
+                var responseMessage = "Response status code does not indicate success: " + (int)result.StatusCode + ". ";
+                throw new HttpRequestException(responseMessage + Environment.NewLine + response);
+            }
+       
+
+            return response;
         }
 
         #endregion

@@ -26,9 +26,17 @@ namespace invoicing.services.sdk.dotNET.Model {
 
         [JsonProperty(PropertyName = "taxIds", Order = 6)]
         public List<ActorTaxId> TaxIds { get; set; }
+
+        /// <summary>
+        /// Use this when calling seller/update API method.
+        /// </summary>
+        [JsonProperty(PropertyName = "logoUrl", Order = 7)]
+        public string LogoUrl { get; set; }
+
         public bool ShouldSerializeTaxIds() {
             return (HasTaxIds());
         }
+
         public bool ShouldDeSerializeTaxIds() {
             return (HasTaxIds());
         }

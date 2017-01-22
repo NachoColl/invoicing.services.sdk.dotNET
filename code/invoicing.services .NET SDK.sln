@@ -7,6 +7,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "invoicing.services.sdk.dotN
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "invoicing.services.sdk.dotNET.Tests", "invoicing.services.sdk.dotNET.Tests\invoicing.services.sdk.dotNET.Tests.xproj", "{E7A792C5-E5C6-4A2E-AF2A-654318BBBCC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "invoicing.services net46 Console Application Nuget Test", "invoicing.services net46 Console Application Nuget Test\invoicing.services net46 Console Application Nuget Test.csproj", "{15B3E265-A5B1-4C7E-B785-D9732EA03E63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget Test", "Nuget Test", "{B33D16EC-BE09-4F9B-B79A-CC107027B5A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +25,15 @@ Global
 		{E7A792C5-E5C6-4A2E-AF2A-654318BBBCC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7A792C5-E5C6-4A2E-AF2A-654318BBBCC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7A792C5-E5C6-4A2E-AF2A-654318BBBCC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15B3E265-A5B1-4C7E-B785-D9732EA03E63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B3E265-A5B1-4C7E-B785-D9732EA03E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B3E265-A5B1-4C7E-B785-D9732EA03E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B3E265-A5B1-4C7E-B785-D9732EA03E63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15B3E265-A5B1-4C7E-B785-D9732EA03E63} = {B33D16EC-BE09-4F9B-B79A-CC107027B5A1}
 	EndGlobalSection
 EndGlobal

@@ -9,16 +9,22 @@ namespace invoicing.services.sdk.dotNET.Model {
     public class Labels
     {
         [JsonProperty(PropertyName = "title")]
-        public string Title { get; set; } = "INVOICE #";
+        public string Title { get; set; } = "INVOICE";
+
+        [JsonProperty(PropertyName = "invoiceNumber")]
+        public string InvoiceNumber { get; set; } = "Invoice Number";
+
+        [JsonProperty(PropertyName = "invoiceDate")]
+        public string InvoiceDate { get; set; } = "Invoice Date";
 
         [JsonProperty(PropertyName = "sellerLabel")]
-        public string SellerLabel { get; set; } = "Bill From:";
+        public string SellerLabel { get; set; } = "Bill From";
 
         [JsonProperty(PropertyName = "sellerTaxIdsLabel")]
         public string SellerTaxIdsLabel { get; set; } = "Tax ID(s)";
 
         [JsonProperty(PropertyName = "buyerLabel")]
-        public string BuyerLabel { get; set; } = "Bill To:";
+        public string BuyerLabel { get; set; } = "Bill To";
 
         [JsonProperty(PropertyName = "buyerTaxIdsLabel")]
         public string BuyerTaxIdsLabel { get; set; } = "Tax ID(s)";

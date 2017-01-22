@@ -7,16 +7,16 @@
   "targets": {
     ".NETStandard,Version=v1.6": {},
     ".NETStandard,Version=v1.6/": {
-      "invoicing.services.sdk.dotNET/1.1.3": {
+      "invoicing.services.sdk.dotNET/1.1.5": {
         "dependencies": {
-          "NETStandard.Library": "1.6.1",
-          "Newtonsoft.Json": "9.0.1",
-          "System.Text.Encoding.CodePages": "4.0.1",
+          "Microsoft.AspNetCore.WebUtilities": "1.1.0",
           "Microsoft.Extensions.FileProviders.Embedded": "1.0.0",
           "Microsoft.Extensions.Primitives": "1.1.0",
-          "Microsoft.AspNetCore.WebUtilities": "1.1.0",
-          "System.Xml.XmlDocument": "4.3.0",
-          "System.Reflection.TypeExtensions": "4.3.0"
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "9.0.1",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Text.Encoding.CodePages": "4.0.1",
+          "System.Xml.XmlDocument": "4.3.0"
         },
         "runtime": {
           "invoicing.services.sdk.dotNET.dll": {}
@@ -959,7 +959,7 @@
     }
   },
   "libraries": {
-    "invoicing.services.sdk.dotNET/1.1.3": {
+    "invoicing.services.sdk.dotNET/1.1.5": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -12,7 +12,7 @@ using Xunit.Abstractions;
 namespace invoicing.services.sdk.dotNET.Tests {
     public class FunctionTest {
 
-        // Set your API KEY here for doing the tests.
+        // Set your API key here (get one at http://invoicing.services).
         const string MY_API_KEY = "";
 
         [Fact(DisplayName = "SDK: Creates a simple invoice.")]
@@ -100,7 +100,7 @@ namespace invoicing.services.sdk.dotNET.Tests {
 
             long now = Utils.Timestamp.CurrentTimeMillis();
             AddInvoiceResponse response = API.AddInvoice(new Model.Invoice() {
-                Dummy = true,
+                Dummy = false,
                 Id = "0000123",
                 Date = now,
                 CurrencyCode = "USD",
