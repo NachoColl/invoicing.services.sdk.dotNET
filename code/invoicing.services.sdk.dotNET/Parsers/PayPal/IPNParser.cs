@@ -27,8 +27,6 @@ namespace invoicing.services.sdk.dotNET.Parsers.PayPal {
 
                 case IPNProperties.CONSTANTS.TransactionTypes.cart:
                 case IPNProperties.CONSTANTS.TransactionTypes.express_checkout:
-                case IPNProperties.CONSTANTS.PaymentStatus.Refunded:
-                case IPNProperties.CONSTANTS.PaymentStatus.Reversed:
                     return Parse_cart(IPNValues);
                 case IPNProperties.CONSTANTS.TransactionTypes.recurring_payment_profile_created:
                     if (IPNValues.RECURRING.initial_payment_status != IPNProperties.CONSTANTS.PaymentStatus.Completed)
@@ -37,7 +35,14 @@ namespace invoicing.services.sdk.dotNET.Parsers.PayPal {
                 case IPNProperties.CONSTANTS.TransactionTypes.recurring_payment:
                     return Parse_recurring_payment(IPNValues);
                 default:
-                    throw new Exception("This TXN_TYPE IPN message is not parsed for now!");
+                    switch (IPNValues.PAYMENT.payment_status) {
+                        case IPNProperties.CONSTANTS.PaymentStatus.Refunded:
+                        case IPNProperties.CONSTANTS.PaymentStatus.Reversed:
+                            return Parse_cart(IPNValues);
+                        default:
+                            throw new Exception("This IPN message is not parsed for now!");
+                    }
+                    
             }
 
         }
@@ -168,7 +173,8 @@ namespace invoicing.services.sdk.dotNET.Parsers.PayPal {
                     Line3 = IPNValues.TRANSACTION.residence_country
                 },
                 Notes = new TextBlock() {
-                    Line3 = "PayPal status notes: " + IPNValues.PAYMENT.payment_status
+                    Line1 = isRefund ? string.Format("PayPal refund of transaction{0}.", " " + IPNValues.TRANSACTION.parent_txn_id) : "",
+                    Line3 = "PayPal status: " + IPNValues.PAYMENT.payment_status
                 }
             };
 

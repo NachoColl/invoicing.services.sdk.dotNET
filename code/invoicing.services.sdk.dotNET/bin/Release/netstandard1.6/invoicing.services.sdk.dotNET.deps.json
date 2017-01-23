@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v1.6": {},
     ".NETStandard,Version=v1.6/": {
-      "invoicing.services.sdk.dotNET/1.1.5": {
+      "invoicing.services.sdk.dotNET/1.1.6": {
         "dependencies": {
           "Microsoft.AspNetCore.WebUtilities": "1.1.0",
           "Microsoft.Extensions.FileProviders.Embedded": "1.0.0",
@@ -959,7 +959,7 @@
     }
   },
   "libraries": {
-    "invoicing.services.sdk.dotNET/1.1.5": {
+    "invoicing.services.sdk.dotNET/1.1.6": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

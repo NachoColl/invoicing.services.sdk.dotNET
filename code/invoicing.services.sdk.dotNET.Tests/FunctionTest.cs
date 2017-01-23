@@ -263,6 +263,18 @@ namespace invoicing.services.sdk.dotNET.Tests {
             Assert.Equal("4R478441Y3261273T", response.InvoiceId);
         }
 
+        [Fact(DisplayName = @"SDK:PAYPAL:INVOICE:REFUND Creates an Invoice from PAYPAL REFUNG IPN Message.")]
+        public void Test_SDK_PAYPAL_INVOICE_ADD_4() {
+
+            InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
+
+            string ipnMessage = File.ReadAllText(@"PayPalIPNMessage_Refund1.txt");
+
+            Invoice invoice = Parsers.PayPal.IPNParser.Parse(ipnMessage);
+            AddInvoiceResponse response = API.AddInvoice(invoice);
+            Assert.Equal("0RY50525LL7405401", response.InvoiceId);
+        }
+
         [Fact(DisplayName = @"SDK: List invoices for Year 2017.")]
         public void Test_SDK_INVOICE_LIST_1() {
 
