@@ -9,22 +9,27 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace invoicing.services.sdk.dotNET
 {
     public class InvoicingAPI
     {
-        public const string APIEndPoint = "https://api.invoicing.services/";
-        public const string InvoicesBaseURL = "https://s3-us-west-2.amazonaws.com/files.invoicing.services/";
+        const string APIEndPoint = "https://api.invoicing.services/";
+        const string InvoicesBaseURL = "https://s3-us-west-2.amazonaws.com/files.invoicing.services/";
 
-        static HttpClient _client = new HttpClient() { BaseAddress = new Uri(APIEndPoint) };
+        public delegate void LogHandler(string LogMessage);
+      
+        HttpClient _client = null;
      
-        public InvoicingAPI(string APIKey) {
+        public InvoicingAPI(string APIKey, LogHandler LogHandler = null) {
             if (string.IsNullOrWhiteSpace(APIKey))
                 throw new Exception("You must provide your invoicing.services API Key!");
-
+       
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+            _client = new HttpClient(new HttpClientLogHandler(new HttpClientHandler(), LogHandler)) { BaseAddress = new Uri(APIEndPoint) };
+            _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _client.DefaultRequestHeaders.Add("X-Api-Key", APIKey);
         }
@@ -101,7 +106,7 @@ namespace invoicing.services.sdk.dotNET
 
         #region privates
 
-        static string CallAPI(string Method, Object Object) {
+        string CallAPI(string Method, Object Object) {
 
             string jsonString = JsonConvert.SerializeObject(Object, new JsonSerializerSettings() {
                 NullValueHandling = NullValueHandling.Ignore,
@@ -120,7 +125,7 @@ namespace invoicing.services.sdk.dotNET
             return response;
         }
 
-        static string CallAPI(string Method, string BodyText) {
+        string CallAPI(string Method, string BodyText) {
 
             Encoding wind1252 = Encoding.GetEncoding("windows-1252");
 
@@ -139,6 +144,26 @@ namespace invoicing.services.sdk.dotNET
 
         #endregion
 
+
+        public class HttpClientLogHandler : DelegatingHandler {
+
+            LogHandler _logHandler = null;
+
+            public HttpClientLogHandler(HttpMessageHandler innerHandler, LogHandler LogHandler = null)
+                : base(innerHandler) {
+
+                _logHandler = LogHandler;
+            }
+
+            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
+
+                if (_logHandler != null) {
+                    _logHandler(request.ToString());
+                }
+                return base.SendAsync(request, cancellationToken);
+            }
+
+        }
 
     }
 }

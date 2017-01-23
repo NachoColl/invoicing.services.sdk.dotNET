@@ -9,7 +9,7 @@
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "xunit": "2.2.0-beta2-build3300",
     "Microsoft.DotNet.InternalAbstractions": "1.0.500-preview2-1-003177",
-    "invoicing.services.sdk.dotNET": "1.1.5-*"
+    "invoicing.services.sdk.dotNET": "1.1.8-*"
   },
 
   "testRunner": "xunit",

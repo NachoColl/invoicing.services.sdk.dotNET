@@ -2719,7 +2719,7 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "invoicing.services.sdk.dotNET/1.1.5": {
+      "invoicing.services.sdk.dotNET/1.1.8": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
@@ -8055,7 +8055,7 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "invoicing.services.sdk.dotNET/1.1.5": {
+    "invoicing.services.sdk.dotNET/1.1.8": {
       "type": "project",
       "path": "../invoicing.services.sdk.dotNET/project.json",
       "msbuildProject": "../invoicing.services.sdk.dotNET/invoicing.services.sdk.dotNET.xproj"
@@ -8066,7 +8066,7 @@
       "Microsoft.DotNet.InternalAbstractions >= 1.0.500-preview2-1-003177",
       "Microsoft.NETCore.App >= 1.1.0",
       "dotnet-test-xunit >= 2.2.0-preview2-build1029",
-      "invoicing.services.sdk.dotNET >= 1.1.5-*",
+      "invoicing.services.sdk.dotNET >= 1.1.8-*",
       "xunit >= 2.2.0-beta2-build3300"
     ],
     ".NETCoreApp,Version=v1.1": []

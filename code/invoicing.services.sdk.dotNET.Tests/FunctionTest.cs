@@ -18,8 +18,9 @@ namespace invoicing.services.sdk.dotNET.Tests {
         [Fact(DisplayName = "SDK: Creates a simple invoice.")]
         public void Test_SDK_INVOICE_ADD_1() {
 
-            InvoicingAPI API = new InvoicingAPI(MY_API_KEY);
-
+            string logMessage;
+            InvoicingAPI API = new InvoicingAPI(MY_API_KEY, x=> logMessage = x);
+            
             long now = Utils.Timestamp.CurrentTimeMillis();
             AddInvoiceResponse response = API.AddInvoice(new Model.Invoice() {
                 Dummy = false,
