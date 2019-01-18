@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace invoicing.services.sdk.dotNET.Model.APIResponses
+namespace invoicing.services.sdk.dotNET.Model.APIResponses.List
 {
     public class ListInvoiceResponseItem
     {

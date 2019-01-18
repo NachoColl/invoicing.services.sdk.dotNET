@@ -12,7 +12,7 @@ namespace invoicing.services.sdk.dotNET.Model.APIResponses
         public string InvoiceId { get; set; }
 
         [JsonProperty(PropertyName = "invoiceDate")]
-        public string InvoiceDate { get; set; }
+        public long InvoiceDate { get; set; }
 
         [JsonProperty(PropertyName = "invoiceFileURL")]
         public string InvoiceFileURL { get; set; }

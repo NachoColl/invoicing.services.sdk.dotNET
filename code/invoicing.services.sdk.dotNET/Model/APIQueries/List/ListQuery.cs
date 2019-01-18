@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace invoicing.services.sdk.dotNET.Model.APIQueries
+namespace invoicing.services.sdk.dotNET.Model.APIQueries.List
 {
     public class Months {
         public static int January = 1,
@@ -21,7 +21,7 @@ namespace invoicing.services.sdk.dotNET.Model.APIQueries
         December = 12;
     }
 
-    public class ListInvoiceQuery
+    public class ListQuery
     {
         [JsonProperty(PropertyName = "year", Required = Required.Always)]
         public int Year { get; set; }
