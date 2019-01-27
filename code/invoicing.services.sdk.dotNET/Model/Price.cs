@@ -4,6 +4,9 @@ namespace invoicing.services.sdk.dotNET.Model
 {
     public class Price
     {
+        [JsonProperty(PropertyName = "productId")]
+        public string productId { get; set; }
+
         [JsonProperty(PropertyName = "countryCode")]
         public string CountryCode { get; set; } = "US";
 
