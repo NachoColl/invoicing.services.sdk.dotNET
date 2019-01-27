@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace invoicing.services.sdk.dotNET.Model.APIQueries
+namespace invoicing.services.sdk.dotNET.Model.APIQueries.Get
 {
     public class GetInvoiceQuery
     {

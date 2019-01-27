@@ -14,7 +14,7 @@ using invoicing.services.sdk.dotNET.Model.APIQueries;
 using invoicing.services.sdk.dotNET.Model.APIQueries.List;
 using invoicing.services.sdk.dotNET.Model.APIResponses;
 using invoicing.services.sdk.dotNET.Model.APIResponses.List;
-
+using invoicing.services.sdk.dotNET.Model.APIQueries.Get;
 
 namespace invoicing.services.sdk.dotNET
 {
