@@ -19,7 +19,7 @@ namespace invoicing.services.sdk.dotNET.Model
         [JsonProperty(PropertyName = "currency")] 
         public string Currency { get; set; }
          [JsonProperty(PropertyName = "price")] 
-        public decimal price { get; set; }
+        public decimal Price { get; set; }
 
     }
 }
