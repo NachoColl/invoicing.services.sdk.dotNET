@@ -16,8 +16,10 @@ namespace invoicing.services.sdk.dotNET.Model
         public string Name { get; set; }
         [JsonProperty(PropertyName = "description")] 
         public string Description { get; set; }
-        [JsonProperty(PropertyName = "prices")] 
-        public List<Price> Prices { get; set; } = new List<Price>();
+        [JsonProperty(PropertyName = "currency")] 
+        public string Currency { get; set; }
+         [JsonProperty(PropertyName = "price")] 
+        public decimal price { get; set; }
 
     }
 }
