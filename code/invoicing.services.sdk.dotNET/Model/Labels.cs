@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace invoicing.services.sdk.dotNET.Model {
 
-    public class Labels
-    {
+    public class Labels {
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; } = "INVOICE";
 
